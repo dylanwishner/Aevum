@@ -14,13 +14,15 @@ fn main() {
 }
 
 fn get_values() -> Result<(f32, f32, TimeUnit)> {
-    let mut clock = String::from("abc");
+    let mut clock = String::from("placeholder");
 
     println!("Clock speed: ");
     while !clock.chars().all(|c| c.is_numeric()) {
         clock.clear();
         stdin().read_line(&mut clock)?;
-        clock.pop(); // Pop the newline character
+
+        // Filter out non-numeric characters
+        clock = clock.chars().filter(|c| c.is_digit(10)).collect();
     }
 
     let mut period_str = String::new();
