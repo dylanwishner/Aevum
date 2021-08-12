@@ -3,22 +3,35 @@ mod timer;
 mod util;
 
 use anyhow::Result;
-use std::io::{stdin, Read};
-use timer::Timer;
+use std::io::stdin;
+use timer::{TimeUnit, Timer};
+
+use crate::util::is_valid_period;
 
 fn main() {
-    let (clock, timer_value) = get_values().expect("Error reading input");
-    let _timer = Timer::new(clock, timer_value);
+    let (clock, period, unit) = get_values().expect("Error reading input");
+    let _timer = Timer::new(clock, period, unit);
 }
 
-fn get_values() -> Result<(String, String)> {
-    let mut clock = String::new();
+fn get_values() -> Result<(f32, f32, TimeUnit)> {
+    let mut clock = String::from("abc");
+
     println!("Clock speed: ");
-    stdin().read_line(&mut clock)?;
+    while !clock.chars().all(|c| c.is_numeric()) {
+        clock.clear();
+        stdin().read_line(&mut clock)?;
+        clock.pop(); // Pop the newline character
+    }
 
-    let mut timer_value = String::new();
+    let mut period_str = String::new();
+
     println!("Timer period: ");
-    stdin().read_line(&mut timer_value)?;
+    while is_valid_period(&period_str).is_none() {
+        period_str.clear();
+        stdin().read_line(&mut period_str)?;
+        period_str.pop(); // Pop the newline character
+    }
 
-    Ok((clock, timer_value))
+    let (period, unit) = is_valid_period(&period_str).unwrap();
+    Ok((clock.parse::<f32>().unwrap(), period, unit))
 }
