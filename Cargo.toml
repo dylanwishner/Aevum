@@ -1,16 +1,17 @@
 [package]
 authors = ["Dylan Wishner <dylanwishner@gmail.com>"]
 categories = ["command-line-utilities", "development-tools", "embedded"]
-description = "A CLI utility to calculate timer register values for STM32 microcontrollers."
+description = "A CLI utility to calculate timer register values for various microcontrollers."
 edition = "2018"
-keywords = ["arduino", "arm", "cli", "cortex-m", "stm32", "timer"]
+keywords = ["arduino", "arm", "avr", "cli", "cortex-m", "stm32", "timer"]
 
 license = "MIT"
 name = "aevum"
 repository = "https://github.com/dylanwishner/aevum"
-version = "0.1.1"
+version = "2.0.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-clap = "3.0.0-beta.2"
+anyhow = "1.0.42"
+num-format = "0.4.0"
